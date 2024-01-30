@@ -5,15 +5,6 @@ import 'package:connectivity_plus/connectivity_plus.dart';
 import 'package:shorts_tutorial/print.dart';
 
 class ConnectivityHelper {
-  ConnectivityHelper._();
-
-  static ConnectivityHelper? _connectivityHelper;
-
-  static ConnectivityHelper get instance {
-    _connectivityHelper ??= ConnectivityHelper._();
-    return _connectivityHelper!;
-  }
-
   final _connectivity = Connectivity();
 
   Stream<ConnectivityResult> get onConnectivityChanged =>

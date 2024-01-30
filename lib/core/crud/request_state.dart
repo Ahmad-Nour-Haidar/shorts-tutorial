@@ -22,7 +22,8 @@ final class OfflineState extends RequestState {
 }
 
 final class FailureState extends RequestState {
-  FailureState({String? message}) : super(message ?? 'Some thing went wrong');
+  FailureState({String? message})
+      : super(message ?? 'FailureState, Some thing went wrong');
 }
 
 final class TimeoutState extends RequestState {

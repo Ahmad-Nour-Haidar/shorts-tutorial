@@ -9,14 +9,17 @@ enum MethodType { post, get, delete, put, patch }
 
 final class Crud {
   final _headers = {
-    "Content-Type": "application/json",
+    // "Content-Type": "application/json",
     'Accept': 'application/json',
   };
 
-  late Dio _dio;
+  static late Dio _dio;
+  static final _connectivityHelper = ConnectivityHelper();
 
   Crud() {
-    _dio = Dio(BaseOptions(headers: _headers));
+    _dio = Dio(
+      BaseOptions(headers: _headers),
+    );
   }
 
   Future<Either<RequestState, Map<String, dynamic>>> sendRequest({
@@ -29,7 +32,7 @@ final class Crud {
     String nameKeyFile = "file",
   }) async {
     /// check connection
-    if (!await ConnectivityHelper.instance.isConnect) {
+    if (!await _connectivityHelper.isConnect) {
       return Left(OfflineState());
     }
 
@@ -37,6 +40,7 @@ final class Crud {
     if (token != null) {
       _dio.options.headers.addAll({
         'Authorization': 'Bearer $token',
+        Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
       });
     }
 
@@ -58,9 +62,10 @@ final class Crud {
     /// send request
     try {
       printme.blue(url);
+      printme.blue(formData.fields);
       final response = await _dio.request(
         url,
-        data: formData,
+        data: file == null ? data : formData,
         queryParameters: queryParameters,
         options: Options(method: methodType.name),
       );

@@ -1,4 +1,7 @@
+import 'dart:io';
+
 import 'package:flutter/material.dart';
+import 'package:image_picker/image_picker.dart';
 import 'package:shorts_tutorial/core/crud/crud.dart';
 import 'package:shorts_tutorial/print.dart';
 
@@ -10,14 +13,24 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          const url = 'http://10.0.2.2:8000/api/authors';
+          const url = 'http://10.0.2.2:8000/api/auth/register';
+          // final file = await ImagePicker().pickImage(
+          //   source: ImageSource.gallery,
+          // );
           final r = await Crud().sendRequest(
             url: url,
-            methodType: MethodType.get,
+            methodType: MethodType.post,
+            data: {
+              'email': 'asasws@gmail.com',
+              'username': 'asassxsx',
+              'password': 'aA#11111',
+            },
+            // nameKeyFile: 'image',
+            // file: File(file?.path ?? ''),
           );
           r.fold((l) {
             printme.red('State: $l');
-            printme.red('message: ${l.message}');
+            printme.red('Message: ${l.message}');
           }, (r) {});
         },
       ),
