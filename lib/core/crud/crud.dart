@@ -1,9 +1,13 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
+import 'package:shorts_tutorial/core/extensions/object_extensions.dart';
 import 'package:shorts_tutorial/print.dart';
 import 'package:shorts_tutorial/core/connectivity_helper.dart';
 import 'package:shorts_tutorial/core/crud/request_state.dart';
+
+import '../class/exception.dart';
+import '../services/dependency_injection.dart';
 
 enum MethodType { post, get, delete, put, patch }
 
@@ -115,17 +119,4 @@ final class Crud {
     }
     return FailureState();
   }
-}
-
-class NoContentException extends DioException {
-  NoContentException()
-      : super(
-          requestOptions: RequestOptions(),
-          message: 'No Content',
-          type: DioExceptionType.badResponse,
-          response: Response(
-            requestOptions: RequestOptions(),
-            statusCode: 204,
-          ),
-        );
 }
