@@ -1,19 +1,17 @@
 import 'dart:io';
 import 'package:dio/dio.dart';
 import 'package:dartz/dartz.dart';
-import 'package:shorts_tutorial/core/extensions/object_extensions.dart';
 import 'package:shorts_tutorial/print.dart';
 import 'package:shorts_tutorial/core/connectivity_helper.dart';
 import 'package:shorts_tutorial/core/crud/request_state.dart';
 
 import '../class/exception.dart';
-import '../services/dependency_injection.dart';
 
 enum MethodType { post, get, delete, put, patch }
 
 final class Crud {
   final _headers = {
-    // "Content-Type": "application/json",
+    "Content-Type": "application/json",
     'Accept': 'application/json',
   };
 
@@ -21,9 +19,7 @@ final class Crud {
   static final _connectivityHelper = ConnectivityHelper();
 
   Crud() {
-    _dio = Dio(
-      BaseOptions(headers: _headers),
-    );
+    _dio = Dio(BaseOptions(headers: _headers));
   }
 
   Future<Either<RequestState, Map<String, dynamic>>> sendRequest({
@@ -44,23 +40,24 @@ final class Crud {
     if (token != null) {
       _dio.options.headers.addAll({
         'Authorization': 'Bearer $token',
-        Headers.contentTypeHeader: Headers.formUrlEncodedContentType,
       });
     }
 
-    /// add data
-    final formData = FormData.fromMap(data ?? {});
-
-    /// add file
+    /// add data and file as form data if we need to send file
+    final formData = FormData();
     if (file != null) {
+      // add data
+      final dataSent =
+          data!.map((key, value) => MapEntry(key, value.toString())).entries;
+      formData.fields.addAll(dataSent);
+
+      // add file
       final fileName = file.path.split('/').last;
       final fileUpload = await MultipartFile.fromFile(
         file.path,
         filename: fileName,
       );
-      formData.files.addAll({
-        nameKeyFile: fileUpload,
-      }.entries);
+      formData.files.addAll({nameKeyFile: fileUpload}.entries);
     }
 
     /// send request
@@ -75,9 +72,8 @@ final class Crud {
       );
       printme.cyan(response.statusCode);
       printme.printFullText(response.data);
-      if (response.statusCode == 204) {
-        throw NoContentException();
-      }
+      if (response.statusCode == 204) throw NoContentException();
+
       return Right(response.data);
     } on DioException catch (e) {
       printme.red('Response code: ${e.response?.statusCode}');

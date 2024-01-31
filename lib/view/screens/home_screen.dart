@@ -14,18 +14,20 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       floatingActionButton: FloatingActionButton(
         onPressed: () async {
-          const url = 'http://10.0.2.2:8000/api/auth/register';
+          const url = 'http://10.0.2.2:8000/api/authors';
           // final file = await ImagePicker().pickImage(
           //   source: ImageSource.gallery,
           // );
           final r = await Crud().sendRequest(
             url: url,
-            methodType: MethodType.post,
+            methodType: MethodType.get,
             data: {
               'email': 'asasws@gmail.com',
               'username': 'asassxsx',
               'password': 'aA#11111',
+              'page': 4,
             },
+            queryParameters:{'page': 4,}
             // nameKeyFile: 'image',
             // file: File(file?.path ?? ''),
           );
