@@ -5,7 +5,7 @@ import 'package:shorts_tutorial/print.dart';
 import 'package:shorts_tutorial/core/connectivity_helper.dart';
 import 'package:shorts_tutorial/core/crud/request_state.dart';
 
-import '../class/exception.dart';
+import '../class/no_content_exception.dart';
 
 enum MethodType { post, get, delete, put, patch }
 
@@ -18,6 +18,7 @@ final class Crud {
   static late Dio _dio;
   static final _connectivityHelper = ConnectivityHelper();
 
+  // constructor
   Crud() {
     _dio = Dio(BaseOptions(headers: _headers));
   }

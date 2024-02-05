@@ -1,8 +1,6 @@
 import 'dart:async';
 import 'dart:developer';
-
 import 'package:connectivity_plus/connectivity_plus.dart';
-import 'package:shorts_tutorial/core/services/dependency_injection.dart';
 import 'package:shorts_tutorial/print.dart';
 
 class ConnectivityHelper {
