@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:shorts_tutorial/core/services/navigation_service.dart';
+import 'package:shorts_tutorial/view/screens/login_screen.dart';
 
 import 'core/navigation/route_generator.dart';
 
@@ -13,13 +14,13 @@ class MyApp extends StatelessWidget {
   // This widget is the root of your application.
   @override
   Widget build(BuildContext context) {
-    return MaterialApp(
+    return const MaterialApp(
       debugShowCheckedModeBanner: false,
-      navigatorKey: NavigationService.instance.navigatorKey,
-      onGenerateRoute: AppRoute.routes,
-      initialRoute: AppRoute.initRoute,
+      // navigatorKey: NavigationService.instance.navigatorKey,
+      // onGenerateRoute: AppRoute.routes,
+      // initialRoute: AppRoute.initRoute,
       title: 'Shorts Tutorial',
-      // home: const HomeScreen(),
+      home: LoginScreen(),
     );
   }
 }
