@@ -1,6 +1,7 @@
 import 'package:flutter/material.dart';
 import 'package:shorts_tutorial/core/services/navigation_service.dart';
 import 'package:shorts_tutorial/view/screens/login_screen.dart';
+import 'package:shorts_tutorial/view/screens/signup_screen.dart';
 
 import 'core/navigation/route_generator.dart';
 
@@ -20,7 +21,7 @@ class MyApp extends StatelessWidget {
       // onGenerateRoute: AppRoute.routes,
       // initialRoute: AppRoute.initRoute,
       title: 'Shorts Tutorial',
-      home: LoginScreen(),
+      home: SignupScreen(),
     );
   }
 }
