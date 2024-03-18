@@ -31,6 +31,7 @@ class _LoginScreenState extends State<LoginScreen> {
         backgroundColor: Colors.transparent,
         appBar: AppBar(
           backgroundColor: Colors.transparent,
+          scrolledUnderElevation: 0.0,
           centerTitle: true,
           title: const Text(
             'Login',
@@ -153,24 +154,34 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
               ),
+              const SizedBox(height: 32),
+              const Divider(color: Colors.grey, endIndent: 40),
+              Row(
+                children: [
+                  const Text(
+                    'Don\'t have an account?',
+                    style: TextStyle(
+                      color: Colors.black,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                  TextButton(
+                    onPressed: () {
+                      navigatorAndFinish(context, const SignupScreen());
+                    },
+                    child: const Text(
+                      'Signup',
+                      style: TextStyle(
+                        color: color,
+                        fontSize: 18,
+                        fontWeight: FontWeight.w600,
+                      ),
+                    ),
+                  ),
+                ],
+              ),
               const SizedBox(height: 24),
-              // CustomCard(
-              //   onPressed: () {
-              //     print('onPressed');
-              //   },
-              //   restaurantName: 'Name',
-              //   partnerName: 'Partner\'s name',
-              //   age: 10,
-              // ),
-              // const SizedBox(height: 24),
-              // CustomCard(
-              //   onPressed: () {
-              //     print('onPressed');
-              //   },
-              //   restaurantName: 'Name',
-              //   partnerName: 'Partner\'s name',
-              //   age: 10,
-              // ),
             ],
           ),
         ),

@@ -37,6 +37,7 @@ class _SignupScreenState extends State<SignupScreen> {
       child: Scaffold(
         backgroundColor: Colors.transparent,
         appBar: AppBar(
+          scrolledUnderElevation: 0.0,
           backgroundColor: Colors.transparent,
           centerTitle: true,
           title: const Text(
@@ -49,6 +50,37 @@ class _SignupScreenState extends State<SignupScreen> {
         body: ListView(
           padding: const EdgeInsets.fromLTRB(30, 0, 10, 0),
           children: [
+            Row(
+              mainAxisAlignment: MainAxisAlignment.center,
+              children: [
+                Container(
+                  height: 120,
+                  width: 120,
+                  decoration: BoxDecoration(
+                    borderRadius: BorderRadius.circular(10),
+                    border: Border.all(
+                      color: Colors.black,
+                      width: 2,
+                    ),
+                  ),
+                  child: Center(
+                    child: Image.asset(
+                      'assets/images/empty-image.jpg',
+                      width: 50,
+                      height: 50,
+                    ),
+                  ),
+                ),
+                const SizedBox(width: 10),
+                IconButton(
+                  onPressed: () {},
+                  icon: const Icon(
+                    Icons.edit,
+                  ),
+                ),
+              ],
+            ),
+            const SizedBox(height: 16),
             CustomTextFormField(
               hintText: 'Name',
               controller: nameController,
@@ -233,22 +265,32 @@ class _SignupScreenState extends State<SignupScreen> {
                 ),
               ),
             ),
-            const SizedBox(height: 24),
-            Align(
-              alignment: Alignment.centerLeft,
-              child: TextButton(
-                onPressed: () {
-                  navigatorAndFinish(context, const LoginScreen());
-                },
-                child: const Text(
-                  'Have an account? Login Now',
+            const SizedBox(height: 32),
+            const Divider(color: Colors.grey, endIndent: 40),
+            Row(
+              children: [
+                const Text(
+                  'Already have an account?',
                   style: TextStyle(
                     color: Colors.black,
                     fontSize: 18,
                     fontWeight: FontWeight.w600,
                   ),
                 ),
-              ),
+                TextButton(
+                  onPressed: () {
+                    navigatorAndFinish(context, const LoginScreen());
+                  },
+                  child: const Text(
+                    'Login',
+                    style: TextStyle(
+                      color: color,
+                      fontSize: 18,
+                      fontWeight: FontWeight.w600,
+                    ),
+                  ),
+                ),
+              ],
             ),
             const SizedBox(height: 24),
           ],
