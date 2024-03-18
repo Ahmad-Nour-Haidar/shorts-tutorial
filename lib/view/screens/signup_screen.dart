@@ -1,12 +1,12 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
 import 'package:shorts_tutorial/core/navigation/navigator.dart';
 import 'package:shorts_tutorial/view/screens/login_screen.dart';
 import 'package:shorts_tutorial/view/widgets/custom_menu.dart';
 import '../widgets/custom_text_form_field.dart';
 
 const color = Color(0xffFF6F02);
+
+String? email, password;
 
 class SignupScreen extends StatefulWidget {
   const SignupScreen({super.key});
@@ -195,7 +195,10 @@ class _SignupScreenState extends State<SignupScreen> {
                     borderRadius: BorderRadius.circular(8),
                   ),
                 ),
-                onPressed: () {},
+                onPressed: () {
+                  email = emailController.text;
+                  password = passwordController.text;
+                },
                 child: const Text(
                   'Signup',
                   style: TextStyle(

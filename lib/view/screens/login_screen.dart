@@ -1,6 +1,5 @@
-import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
-import 'package:flutter/widgets.dart';
+import 'package:shorts_tutorial/view/screens/home_page.dart';
 import 'package:shorts_tutorial/view/screens/signup_screen.dart';
 import '../../core/navigation/navigator.dart';
 import '../widgets/custom_text_form_field.dart';
@@ -95,7 +94,25 @@ class _LoginScreenState extends State<LoginScreen> {
                       borderRadius: BorderRadius.circular(8),
                     ),
                   ),
-                  onPressed: () {},
+                  onPressed: () {
+                    if (emailController.text == email &&
+                        passwordController.text == password) {
+                      navigatorAndFinish(context, const HomePage());
+                    } else {
+                      ScaffoldMessenger.of(context).showSnackBar(
+                        const SnackBar(
+                          backgroundColor: Colors.red,
+                          content: Text(
+                            'Email or Password Not Correct',
+                            style: TextStyle(
+                              fontSize: 18.0,
+                              fontWeight: FontWeight.w600,
+                            ),
+                          ),
+                        ),
+                      );
+                    }
+                  },
                   child: const Text(
                     'Login',
                     style: TextStyle(
