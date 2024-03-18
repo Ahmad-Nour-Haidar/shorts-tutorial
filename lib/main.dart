@@ -21,7 +21,7 @@ class MyApp extends StatelessWidget {
       // onGenerateRoute: AppRoute.routes,
       // initialRoute: AppRoute.initRoute,
       title: 'Shorts Tutorial',
-      home: SignupScreen(),
+      home: LoginScreen(),
     );
   }
 }

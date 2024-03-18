@@ -1,8 +1,9 @@
 import 'package:flutter/cupertino.dart';
 import 'package:flutter/material.dart';
+import 'package:flutter/widgets.dart';
+import 'package:shorts_tutorial/core/navigation/navigator.dart';
+import 'package:shorts_tutorial/view/screens/login_screen.dart';
 import 'package:shorts_tutorial/view/widgets/custom_menu.dart';
-
-import '../widgets/custom_card.dart';
 import '../widgets/custom_text_form_field.dart';
 
 const color = Color(0xffFF6F02);
@@ -56,7 +57,7 @@ class _SignupScreenState extends State<SignupScreen> {
             controller: ageController,
             keyboardType: TextInputType.number,
             validator: (value) {
-              if (value != null && value.isNotEmpty && value.length < 3) {
+              if (value != null && value.isNotEmpty) {
                 final age = int.tryParse(value);
                 if (age != null && age > 1 && age <= 120) {
                   return null;
@@ -94,15 +95,29 @@ class _SignupScreenState extends State<SignupScreen> {
             },
           ),
           const SizedBox(height: 16),
+          CustomMenu(
+            title: city ?? 'City',
+            items: const [
+              PopupMenuItemModel(title: 'Stockholm', value: 'Stockholm'),
+              PopupMenuItemModel(title: 'Gothenburg', value: 'Gothenburg'),
+              PopupMenuItemModel(title: 'Malmö', value: 'Malmö'),
+            ],
+            onChange: (value) {
+              setState(() {
+                gender = value;
+              });
+            },
+          ),
+          const SizedBox(height: 16),
           CustomTextFormField(
             hintText: 'Phone number',
             controller: phoneNumberController,
             keyboardType: TextInputType.number,
             validator: (value) {
-              if (value != null && value.isNotEmpty && value.contains('@')) {
+              if (value != null && value.length == 10) {
                 return null;
               }
-              return 'Email is not valid';
+              return 'Phone number is not valid';
             },
           ),
           const SizedBox(height: 16),
@@ -120,6 +135,7 @@ class _SignupScreenState extends State<SignupScreen> {
           ),
           const SizedBox(height: 16),
           CustomTextFormField(
+            hintText: 'Password',
             isPassword: true,
             controller: passwordController,
             icon: Icons.key,
@@ -132,6 +148,84 @@ class _SignupScreenState extends State<SignupScreen> {
             },
           ),
           const SizedBox(height: 16),
+          CustomTextFormField(
+            hintText: 'Reenter password',
+            isPassword: true,
+            controller: reenterPasswordController,
+            icon: Icons.key,
+            keyboardType: TextInputType.visiblePassword,
+            validator: (value) {
+              if (value != null &&
+                  value.length >= 6 &&
+                  passwordController.text == reenterPasswordController.text) {
+                return null;
+              }
+              return 'Password is not strong';
+            },
+          ),
+          CheckboxListTile(
+            controlAffinity: ListTileControlAffinity.leading,
+            contentPadding: const EdgeInsets.symmetric(horizontal: 0.0),
+            checkColor: Colors.white,
+            activeColor: isAccept ? color : Colors.white,
+            title: Text(
+              'Accept the Term & Services',
+              style: TextStyle(
+                fontWeight: FontWeight.w600,
+                fontSize: 18,
+                color: isAccept ? color : Colors.black,
+              ),
+            ),
+            value: isAccept,
+            onChanged: (value) {
+              setState(() {
+                isAccept = value ?? false;
+              });
+            },
+          ),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: SizedBox(
+              width: MediaQuery.sizeOf(context).width - 80,
+              height: 50.0,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: color,
+                  shape: RoundedRectangleBorder(
+                    borderRadius: BorderRadius.circular(8),
+                  ),
+                ),
+                onPressed: () {},
+                child: const Text(
+                  'Signup',
+                  style: TextStyle(
+                    letterSpacing: 1.0,
+                    fontWeight: FontWeight.w600,
+                    color: Colors.white,
+                    fontSize: 22,
+                  ),
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
+          Align(
+            alignment: Alignment.centerLeft,
+            child: TextButton(
+              onPressed: () {
+                navigatorAndFinish(context, const LoginScreen());
+              },
+              child: const Text(
+                'Have an account? Login Now',
+                style: TextStyle(
+                  color: Colors.black,
+                  fontSize: 18,
+                  fontWeight: FontWeight.w600,
+                ),
+              ),
+            ),
+          ),
+          const SizedBox(height: 24),
         ],
       ),
     );
