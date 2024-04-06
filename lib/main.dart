@@ -1,11 +1,22 @@
 import 'package:flutter/material.dart';
-import 'package:shorts_tutorial/core/services/navigation_service.dart';
 import 'package:shorts_tutorial/view/screens/login_screen.dart';
-import 'package:shorts_tutorial/view/screens/signup_screen.dart';
+import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:socket_io_client/socket_io_client.dart';
 
-import 'core/navigation/route_generator.dart';
+void main() async {
+  IO.Socket socket = IO.io('http://10.0.2.2:8000', {
+    "transports": ["websocket"],
+    "autoConnect": false,
+  });
+  socket.connect();
+  socket.onConnect((_) {
+    print('connect');
+    socket.emit('msg', 'test');
+  });
+  socket.on('event', (data) => print(data));
+  socket.onDisconnect((_) => print('disconnect'));
+  socket.on('fromServer', (_) => print(_));
 
-void main() {
   runApp(const MyApp());
 }
 

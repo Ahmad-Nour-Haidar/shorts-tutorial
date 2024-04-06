@@ -1,9 +1,6 @@
-import 'dart:io';
 
 import 'package:flutter/material.dart';
-import 'package:image_picker/image_picker.dart';
 import 'package:shorts_tutorial/core/crud/crud.dart';
-import 'package:shorts_tutorial/core/services/dependency_injection.dart';
 import 'package:shorts_tutorial/print.dart';
 
 class HomeScreen extends StatelessWidget {
