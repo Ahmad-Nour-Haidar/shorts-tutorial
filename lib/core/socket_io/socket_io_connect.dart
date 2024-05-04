@@ -1,9 +1,10 @@
 import 'package:flutter/material.dart';
 import 'package:socket_io_client/socket_io_client.dart' as IO;
+import 'package:dio/dio.dart';
 
 @immutable
 class SocketIOConnect {
-  void connect() {
+  void connect() async{
     IO.Socket socket = IO.io('http://10.0.2.2:8000', {
       "transports": ["websocket"],
       "autoConnect": false,
@@ -14,6 +15,5 @@ class SocketIOConnect {
     });
     socket.on('posts', (data) => print(data));
     socket.onDisconnect((_) => print('disconnect'));
-    socket.on('fromServer', (_) => print(_));
   }
 }

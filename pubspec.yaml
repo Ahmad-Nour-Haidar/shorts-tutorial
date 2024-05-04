@@ -40,6 +40,12 @@ dependencies:
   dartz: ^0.10.1
   image_picker: ^1.0.7
   socket_io_client: ^2.0.3+1
+  ussd_advanced: ^1.1.0
+  ussd_service: ^0.1.1
+  sim_data: ^0.0.2
+  permission_handler: ^11.3.1
+  flutter_phone_direct_caller: ^2.1.1
+  direct_caller_sim_choice: ^1.0.5
 
 dev_dependencies:
   flutter_test:

@@ -17,6 +17,21 @@ class ConnectivityHelper {
 
   bool handelConnectivity(ConnectivityResult result) {
     printme.yellow(result);
-    return result != ConnectivityResult.none;
+    switch (result) {
+      case ConnectivityResult.bluetooth:
+        return true;
+      case ConnectivityResult.wifi:
+        return true;
+      case ConnectivityResult.ethernet:
+        return true;
+      case ConnectivityResult.mobile:
+        return true;
+      case ConnectivityResult.vpn:
+        return true;
+      case ConnectivityResult.other:
+        return true;
+      case ConnectivityResult.none:
+        return false;
+    }
   }
 }
