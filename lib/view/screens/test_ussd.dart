@@ -1,13 +1,7 @@
-import 'package:direct_caller_sim_choice/direct_caller_sim_choice.dart';
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
 import 'package:flutter_phone_direct_caller/flutter_phone_direct_caller.dart';
 import 'package:permission_handler/permission_handler.dart';
-import 'package:sim_data/sim_data.dart';
-import 'package:sim_data/sim_model.dart';
-
-import 'package:ussd_advanced/ussd_advanced.dart';
-import 'package:ussd_service/ussd_service.dart';
 
 class TestUssd extends StatefulWidget {
   const TestUssd({super.key});
@@ -18,8 +12,6 @@ class TestUssd extends StatefulWidget {
 
 class _TestUssdState extends State<TestUssd> {
   late TextEditingController _controller;
-  String? _response;
-  String _res = "null";
 
   @override
   void initState() {
@@ -32,6 +24,11 @@ class _TestUssdState extends State<TestUssd> {
     _controller.dispose();
     super.dispose();
   }
+
+  final border = OutlineInputBorder(
+    borderRadius: BorderRadius.circular(10),
+    borderSide: const BorderSide(color: Colors.red, width: 2),
+  );
 
   @override
   Widget build(BuildContext context) {
@@ -69,105 +66,42 @@ class _TestUssdState extends State<TestUssd> {
               //   _res = ussdResponseMessage;
               // });
               // print("succes! message: $ussdResponseMessage");
-              final res = await FlutterPhoneDirectCaller.callNumber("*181*0957414325*50#");
+              final res = await FlutterPhoneDirectCaller.callNumber(
+                _controller.text,
+              );
               print(res);
             } on PlatformException catch (e) {
-              _res = e.toString();
               debugPrint("error! code: ${e.code} - message: ${e.message}");
             } catch (e) {
-              _res = e.toString();
               debugPrint("error: $e");
             }
           }
         },
-        child: const Icon(Icons.add),
+        child: const Icon(Icons.send),
       ),
       appBar: AppBar(
-        title: const Text('Ussd Plugin example'),
+        title: const Text('Test Mode'),
       ),
-      body: Column(
-        mainAxisAlignment: MainAxisAlignment.center,
-        mainAxisSize: MainAxisSize.max,
-        children: [
-          // text input
-          TextField(
-            controller: _controller,
-            keyboardType: TextInputType.phone,
-            decoration: const InputDecoration(labelText: 'Ussd code'),
-          ),
-
-          // dispaly responce if any
-          if (_response != null)
-            Padding(
-              padding: const EdgeInsets.symmetric(vertical: 8),
-              child: Text(_response!),
+      body: Padding(
+        padding: const EdgeInsets.all(16.0),
+        child: Column(
+          mainAxisAlignment: MainAxisAlignment.center,
+          mainAxisSize: MainAxisSize.max,
+          children: [
+            TextField(
+              controller: _controller,
+              keyboardType: TextInputType.phone,
+              decoration: InputDecoration(
+                labelText: 'phone number',
+                border: border,
+                disabledBorder: border,
+                enabledBorder: border,
+                focusedBorder: border,
+              ),
             ),
-
-          // buttons
-          Row(
-            mainAxisSize: MainAxisSize.max,
-            mainAxisAlignment: MainAxisAlignment.spaceEvenly,
-            children: [
-              ElevatedButton(
-                onPressed: () {
-                  UssdAdvanced.sendUssd(
-                    code: _controller.text,
-                    subscriptionId: 1,
-                  );
-                },
-                child: const Text('norma\nrequest'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  try {
-                    final res = await UssdAdvanced.sendAdvancedUssd(
-                      code: "*100#",
-                      subscriptionId: 22,
-                    );
-                    setState(() {
-                      _res = res.toString();
-                    });
-                    print("res = $res");
-                  } on PlatformException catch (e) {
-                    _res = e.toString();
-                    debugPrint(
-                        "error! code: ${e.code} - message: ${e.message}");
-                  } catch (e) {
-                    _res = e.toString();
-                    debugPrint("error: $e");
-                  }
-                },
-                child: const Text('single session\nrequest'),
-              ),
-              ElevatedButton(
-                onPressed: () async {
-                  String? _res = await UssdAdvanced.multisessionUssd(
-                      code: _controller.text, subscriptionId: 1);
-                  setState(() {
-                    _response = _res;
-                  });
-                  String? _res2 = await UssdAdvanced.sendMessage('0');
-                  setState(() {
-                    _response = _res2;
-                  });
-                  await UssdAdvanced.cancelSession();
-                },
-                child: const Text('multi session\nrequest'),
-              ),
-            ],
-          ),
-          Text(
-            _res,
-            style: const TextStyle(
-              fontSize: 18,
-              fontWeight: FontWeight.w500,
-              color: Colors.black,
-            ),
-          ),
-        ],
+          ],
+        ),
       ),
     );
   }
 }
-
-// *150*
